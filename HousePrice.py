@@ -27,7 +27,7 @@ def featureEngineering(df,trainNumerical_cols,trainCategorical_cols):
                                                     ],
                                                     remainder='passthrough')
     df = columnTransformer_pipeline.fit_transform(df)
-    pickle.dump(columnTransformer_pipeline,open('E:\\Edureka\\Code\\SelfPython\\Kaggle\\HousePrices\\columnTransformer_pipeline.sav','wb'))   
+    pickle.dump(columnTransformer_pipeline,open('columnTransformer_pipeline.sav','wb'))   
     return df
     
 
@@ -38,8 +38,8 @@ def processData(df):
     return df
 
 def create_model():
-    df_test = pd.read_csv("E:\\Edureka\\Code\\SelfPython\\Kaggle\\HousePrices\\test.csv")
-    df_train = pd.read_csv("E:\\Edureka\\Code\\SelfPython\\Kaggle\\HousePrices\\train.csv")
+    df_test = pd.read_csv("data/test.csv")
+    df_train = pd.read_csv("data/train.csv")
 
     df_train = processData(df_train)
 
@@ -71,16 +71,16 @@ def create_model():
     #X_test = columnTransformer_pipeline.fit_transform(X_test)
     #print(r2_score(y_test,model.predict(X_test)))
 
-    pickle.dump(model,open('E:\\Edureka\\Code\\SelfPython\\Kaggle\\HousePrices\\model.sav','wb'))
+    pickle.dump(model,open('model.sav','wb'))
 
     return model
 
 create_model()
 
 def load_columnTransformer():
-    return pickle.load(open('E:\\Edureka\\Code\\SelfPython\\Kaggle\\HousePrices\\columnTransformer_pipeline.sav','rb'))
+    return pickle.load(open('columnTransformer_pipeline.sav','rb'))
 def load_model():
-    return pickle.load(open('E:\\Edureka\\Code\\SelfPython\\Kaggle\\HousePrices\\model.sav','rb'))
+    return pickle.load(open('model.sav','rb'))
 
 
 def predict(X):
@@ -257,7 +257,7 @@ def streamlitUI():
     })
     return df_val
 
-df_test = pd.read_csv("E:\\Edureka\\Code\\SelfPython\\Kaggle\\HousePrices\\test.csv")
+df_test = pd.read_csv("data/test.csv")
 
 trainNumerical_cols = df_test.select_dtypes(include=['int64','float64']).columns.tolist()
 df_test[trainNumerical_cols] = df_test[trainNumerical_cols].fillna(df_test[trainNumerical_cols].median())
@@ -275,7 +275,3 @@ pred = round(predict(df_val)[0])
 print("pred:",pred)
 
 streamlit.session_state['predicted_price'] = pred
-#fig3 = plotly.express.line(pred)
-#fig3.update_layout(
-#    streamlit.plotly_chart(fig3)
-#)
