@@ -75,7 +75,7 @@ def create_model():
 
     return model
 
-create_model()
+#create_model()
 
 def load_columnTransformer():
     return pickle.load(open('columnTransformer_pipeline.sav','rb'))
